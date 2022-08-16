@@ -77,10 +77,10 @@ jobs:
 
   main:
     needs: dispatch
-    if: needs.dispatch.outputs.modified_website
+    if: needs.dispatch.outputs.modified_src
     uses: 'jan-molak/github-actions-independent-workflows/.github/workflows/test.yaml@main'
 
   website:
     needs: dispatch
-    if: needs.dispatch.outputs.modified_src
+    if: needs.dispatch.outputs.modified_website
     uses: 'jan-molak/github-actions-independent-workflows/.github/workflows/website.yaml@main'
