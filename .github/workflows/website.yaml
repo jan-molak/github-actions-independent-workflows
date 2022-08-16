@@ -1,0 +1,29 @@
+name: Website
+
+on:
+  workflow_call:
+
+  push:
+    branches: [ main ]
+    paths:
+      - '!**'
+      - 'website'
+      - 'README.md'
+  pull_request:
+    branches: [ main ]
+    types: [ opened, synchronize ]
+    paths:
+      - '!**'
+      - 'website'
+      - 'README.md'
+
+permissions:
+  contents: write
+
+jobs:
+
+  docs:
+    runs-on:  ubuntu-latest
+    steps:
+      - name: Run main
+        run: echo "Main running"
