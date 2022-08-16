@@ -1,7 +1,12 @@
-name: Main Workflow
+name: Main Workflow - ${{ inputs.name }}
 
 on:
   workflow_call:
+    input:
+      name:
+        type: string
+        required: true
+        description: Name of the job
 
 permissions:
   contents: write
