@@ -25,5 +25,5 @@ jobs:
   docs:
     runs-on:  ubuntu-latest
     steps:
-      - name: Run main
-        run: echo "Main running"
+      - name: Run website
+        run: echo "Website running"
