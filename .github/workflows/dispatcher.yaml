@@ -79,8 +79,6 @@ jobs:
     needs: dispatch
     if: needs.dispatch.outputs.modified_src
     uses: 'jan-molak/github-actions-independent-workflows/.github/workflows/test.yaml@main'
-    with:
-      name: Dispatch name - main
 
   website:
     needs: dispatch

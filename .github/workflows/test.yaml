@@ -1,4 +1,4 @@
-name: Main Workflow - ${{ inputs.name }}
+name: Main Workflow
 
 on:
   workflow_call:
