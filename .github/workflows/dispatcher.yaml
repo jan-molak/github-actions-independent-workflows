@@ -1,0 +1,73 @@
+name: Dispatcher
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  dispatch:
+    name: Dispatch
+    runs-on: ubuntu-latest  # windows-latest | macos-latest
+    outputs:
+      modified_website: ${{ steps.check-website.outputs.modified_files }}
+      modified_src:     ${{ steps.check-src.outputs.modified_files }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+
+      - name: Get website changes
+        id: changed-files-website
+        uses: tj-actions/changed-files@v26.1
+        with:
+          files: |
+            website/**
+#          files_ignore: |
+#            *.yml
+
+      - name: List all changed website files (debug)
+        run: |
+          for file in ${{ steps.changed-files-website.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
+
+      - name: Get src changes
+        id: changed-files-src
+        uses: tj-actions/changed-files@v26.1
+        with:
+          files: |
+            src/**
+      #          files_ignore: |
+      #            *.yml
+
+      - name: List all changed src files (debug)
+        run: |
+          for file in ${{ steps.changed-files-src.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
+
+      - name: Website changes detected
+        id: check-website
+        if: steps.changed-files-website.outputs.only_modified == 'true'
+        run: |
+          echo "::set-output name=modified_files::${{steps.changed-files-website.outputs.all_modified}}"
+
+      - name: Website changes detected
+        id: check-src
+        if: steps.changed-files-src.outputs.only_modified == 'true'
+        run: |
+          echo "::set-output name=modified_files::${{steps.changed-files-src.outputs.all_modified}}"
+
+  main:
+    needs: dispatch
+    if: needs.dispatch.outputs.modified_website
+    uses: 'jan-molak/github-actions-independent-workflows/.github/workflows/test.yaml@main'
+
+  website:
+    needs: dispatch
+    if: needs.dispatch.outputs.modified_src
+    uses: 'jan-molak/github-actions-independent-workflows/.github/workflows/website.yaml@main'

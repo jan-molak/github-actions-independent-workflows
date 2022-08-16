@@ -1,4 +1,4 @@
-name: Website Workflow
+name: Main Workflow
 
 on:
   workflow_call:
@@ -8,8 +8,8 @@ permissions:
 
 jobs:
 
-  website:
+  test:
     runs-on:  ubuntu-latest
     steps:
-      - name: Run website
-        run: echo "Website running"
+      - name: Run test
+        run: echo "Test running"
