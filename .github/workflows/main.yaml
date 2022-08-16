@@ -14,6 +14,8 @@ jobs:
 
   check-modified-files:
     runs-on: ubuntu-latest
+    outputs:
+      modified_files: ${{ steps.set-output.outputs.modified_files }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -37,9 +39,10 @@ jobs:
           done
 
       - name: Run step if only the files listed above change
+        id: set-output
         if: steps.changed-files.outputs.only_modified == 'true'
         run: |
-          echo "::set-output name=modified_files::${steps.changed-files.outputs.all_modified}"
+          echo "::set-output name=modified_files::${{steps.changed-files.outputs.all_modified}}"
 
   main:
     runs-on:  ubuntu-latest
