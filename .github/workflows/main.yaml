@@ -30,8 +30,7 @@ jobs:
 #            website/**
 #            README.md
 
-      - name: List modified files
-        if: steps.changed-files.outputs.only_modified == 'true'
+      - name: List all modified files
         run: |
           echo "Modified files:"
           for file in ${{ steps.changed-files.outputs.all_modified }}; do
