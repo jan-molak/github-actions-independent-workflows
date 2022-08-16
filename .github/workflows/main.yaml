@@ -23,3 +23,6 @@ jobs:
     steps:
       - name: Run main
         run: echo "Main running"
+
+  website:
+    uses: 'jan-molak/github-actions-independent-workflows/.github/workflows/website.yaml@main'
