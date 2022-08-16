@@ -62,6 +62,19 @@ jobs:
         run: |
           echo "::set-output name=modified_files::${{steps.changed-files-src.outputs.all_modified}}"
 
+      - name: Summary
+        run: |
+          echo "## Detected changes" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Website" >> $GITHUB_STEP_SUMMARY
+          for file in ${{ steps.changed-files-website.outputs.all_changed_files }}; do
+            echo "- $file" >> $GITHUB_STEP_SUMMARY
+          done
+          echo "### Src" >> $GITHUB_STEP_SUMMARY
+          for file in ${{ steps.changed-files-src.outputs.all_changed_files }}; do
+            echo "- $file" >> $GITHUB_STEP_SUMMARY
+          done       
+
   main:
     needs: dispatch
     if: needs.dispatch.outputs.modified_website
