@@ -39,7 +39,7 @@ jobs:
         id: check-website
         if: steps.changed-files-website.outputs.only_modified == 'true'
         run: |
-          echo "::set-output name=modified_files::${{steps.changed-files-website.outputs.all_modified}}"
+          echo "::set-output name=modified_files::{steps.changed-files-website.outputs.all_modified}"
 
       - name: Get src changes
         id: changed-files-src
@@ -60,7 +60,7 @@ jobs:
         id: check-src
         if: steps.changed-files-src.outputs.only_modified == 'true'
         run: |
-          echo "::set-output name=modified_files::${{steps.changed-files-src.outputs.all_modified}}"
+          echo "::set-output name=modified_files::{steps.changed-files-src.outputs.all_modified}"
 
       - name: Summary
         run: |
