@@ -21,8 +21,8 @@ jobs:
       with:
         fetch-depth: 2
 
-    - name: Get specific changed files
-      id: changed-files-specific
+    - name: Get changed files
+      id: changed-files
       uses: tj-actions/changed-files@v26.1
       with:
         files: |
@@ -31,16 +31,17 @@ jobs:
 #          *.yml
 
     - name: List modified files
+      if: steps.changed-files.outputs.only_modified == 'true'
       run: |
         echo "Modified files:"
-        for file in ${{ steps.changed-files-specific.outputs.all_modified }}; do
+        for file in ${{ steps.changed-files.outputs.all_modified }}; do
           echo "$file"
         done
 
     - name: Run step if only the files listed above change
-      if: steps.changed-files-specific.outputs.only_modified == 'true'
+      if: steps.changed-files.outputs.only_modified == 'true'
       run: |
-        echo "::set-output name=modified_files::${steps.changed-files-specific.outputs.all_modified}"
+        echo "::set-output name=modified_files::${steps.changed-files.outputs.all_modified}"
 
   docs:
     runs-on:  ubuntu-latest
