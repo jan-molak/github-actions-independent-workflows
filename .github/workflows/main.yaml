@@ -24,11 +24,11 @@ jobs:
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v26.1
-        with:
+#        with:
 #          files: |
-          files_ignore: |
-            website/**
-            README.md
+#          files_ignore: |
+#            website/**
+#            README.md
 
       - name: List modified files
         if: steps.changed-files.outputs.only_modified == 'true'
