@@ -30,6 +30,13 @@ jobs:
 #        files_ignore: |
 #          *.yml
 
+    - name: List modified files
+      run: |
+        echo "Modified files:"
+        for file in ${{ steps.changed-files-specific.outputs.all_modified }}; do
+          echo "$file"
+        done
+
     - name: Run step if only the files listed above change
       if: steps.changed-files-specific.outputs.only_modified == 'true'
       run: |
